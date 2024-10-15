@@ -4,7 +4,9 @@ from PIL import Image, ImageTk
 import requests
 from io import BytesIO
 
+
 allowed_tags=['sleep','jump','fight','black','white','orange','siamese','cute']
+
 
 def load_image(url):
     try:
@@ -17,7 +19,6 @@ def load_image(url):
     except Exception as e:
         print(f'Произошла ошибка: {e}')
         return None
-
 
 
 def open_new_window():
