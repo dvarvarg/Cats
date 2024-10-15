@@ -7,12 +7,11 @@ from io import BytesIO
 
 allowed_tags=['sleep','jump','fight','black','white','orange','siamese','cute']
 
-
 def load_image(url):
     try:
         response=requests.get(url) #response-ответ, requests-запрос по ссылке, а то, что вернется, положим в response
         response.raise_for_status() #для обработки исключений
-        image_data=BytesIO(response.content)
+        image_data=BytesIO(response.content) # Преобразовали к нормальному виду из двоичного кода
         img=Image.open(image_data)
         img.thumbnail((600,480),Image.Resampling.LANCZOS)
         return ImageTk.PhotoImage(img)
@@ -28,7 +27,7 @@ def open_new_window():
     if img:
         new_window=Toplevel()
         new_window.title('Картинка с котиком')
-        new_window.geometry('600x480')
+        #new_window.geometry('600x480')
         label = Label(new_window,image=img)
         label.pack()
         label.image = img  # чтобы сборщик мусора картинку не убрал
@@ -40,7 +39,9 @@ def exit():
 
 window=Tk()
 window.title('Cats!')
-window.geometry('600x520')
+window.geometry('600x480')
+# window.geometry(f'600x480+{window.winfo_screenmmwidth()//2-300}+{window.winfo_screenheight()//2-240}')
+window.iconbitmap('cat.ico')
 
 menu_bar=Menu(window)
 window.config(menu=menu_bar)
