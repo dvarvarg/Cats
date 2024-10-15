@@ -3,6 +3,8 @@ from PIL import Image, ImageTk
 import requests
 from io import BytesIO
 
+from gevent.testing.travis import command
+
 
 def load_image(url):
     try:
@@ -19,7 +21,9 @@ def load_image(url):
 
 
 def open_new_window():
-    img = load_image(url)
+    tag=tag_entry.get()
+    url_tag=f'https://cataas.com/cat/{tag}' if tag else 'https://cataas.com/cat'
+    img = load_image(url_tag)
     if img:
         new_window=Toplevel()
         new_window.title('Картинка с котиком')
@@ -37,10 +41,11 @@ window=Tk()
 window.title('Cats!')
 window.geometry('600x520')
 
+tag_entry=Entry(text='Загрузить по тегу', command=open_new_window)
+tag_entry.pack()
 
-
-# update_button=Button(text='Обновить',command=open_new_window)
-# update_button.pack(side=BOTTOM)
+load_button=Button()
+load_button.pack()
 
 menu_bar=Menu(window)
 window.config(menu=menu_bar)
@@ -52,7 +57,5 @@ file_menu.add_separator()
 file_menu.add_command(label='Выход',command=exit)
 
 url=('https://cataas.com/cat')
-
-set_image()
 
 window.mainloop()
